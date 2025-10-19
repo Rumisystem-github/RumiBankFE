@@ -1,0 +1,57 @@
+.INFO{
+	margin: 0 auto;
+	margin-top: 50px;
+
+	padding: 0px;
+
+	width: 300px;
+
+	background-color: white;
+
+	border-radius: 10px;
+
+	overflow: hidden;
+}
+
+.INFO > .USER{
+	background-color: red;
+
+	text-align: center;
+
+	padding-top: 50px;
+}
+
+.INFO > .USER > .ICON{
+	position: relative;
+
+	width: 100px;
+	height: 100px;
+
+	margin: 0 auto;
+	margin-bottom: -20px;
+	padding: 5px;
+
+	border-radius: 100px;
+
+	z-index: 1;
+}
+
+.INFO > .USER > div{
+	position: relative;
+
+	background-color: white;
+
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+
+	padding-top: 20px;
+}
+
+.INFO > .AMOUNT{
+	padding: 10px;
+}
+
+.INFO > .ETC{
+	padding: 10px;
+}

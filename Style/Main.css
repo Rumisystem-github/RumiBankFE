@@ -1,0 +1,15 @@
+footer{
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+
+	padding: 10px;
+}
+
+footer > a{
+	color: black;
+}
+
+footer > a:visited{
+	color: black;
+}

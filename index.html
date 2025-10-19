@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>銀行</TITLE>
+
+		<!--るみ鯖のデフォ-->
+		<LINK REL="stylesheet" HREF="https://cdn.rumia.me/CSS/reset.css">
+		<LINK REL="stylesheet" HREF="https://cdn.rumia.me/CSS/font.css">
+		<LINK REL="stylesheet" HREF="https://cdn.rumia.me/CSS/DEFAULT.css">
+		<LINK REL="stylesheet" HREF="https://cdn.rumia.me/CSS/icon.css">
+
+		<LINK REL="stylesheet" HREF="/Style/Main.css">
+		<LINK REL="stylesheet" HREF="/Style/Info.css">
+	</HEAD>
+	<BODY>
+		<DIV CLASS="INFO PLATE">
+			<DIV CLASS="USER">
+				<DIV CLASS="ICON">
+					<IMG ID="INFO_USER_ICON">
+				</DIV>
+				<DIV ID="INFO_USER_NAME">名前</DIV>
+			</DIV>
+			<DIV CLASS="AMOUNT">
+				<TABLE>
+					<TR>
+						<TH>お財布</TH>
+						<TD STYLE="padding-left: 10px;">
+							<SPAN ID="INFO_AMOUNT_WALLET"></SPAN>L
+						</TD>
+						<TD>
+							<SPAN onclick="dialog.DIALOG(`お財布は、購入したラスクや特典で獲得したラスクが入ります。\nこれは決済のみに使用でき、現金化はできません。`);">[?]</SPAN>
+						</TD>
+					</TR>
+					<TR>
+						<TH>銀行</TH>
+						<TD STYLE="padding-left: 10px;">
+							<SPAN ID="INFO_AMOUNT_BANK"></SPAN>L
+						</TD>
+						<TD>
+							<SPAN onclick="dialog.DIALOG(`銀行は、るみさーばー内で得た収益が入ります。\nこれは現金化することができます(現在開発中)`);">[?]</SPAN>
+						</TD>
+					</TR>
+				</TABLE>
+			</DIV>
+			<DIV CLASS="ETC">
+				<A HREF="/pay.html"><BUTTON>ラスクを買う</BUTTON></A>
+				<A HREF="/transaction.html"><BUTTON>履歴</BUTTON></A>
+			</DIV>
+		</DIV>
+
+		<FOOTER>
+			<A HREF="https://rumishistem.su/">©合同会社るみしすてむ</A>
+			<A HREF="https://rumishistem.su/tokutei_shou_torihiki_hou.txt">特定商取引法表示</A>
+		</FOOTER>
+	</BODY>
+
+	<SCRIPT SRC="https://cdn.rumia.me/LIB/DIALOG.js?V=LATEST" defer></SCRIPT>
+	<SCRIPT SRC="https://cdn.rumia.me/LIB/COOKIE.js?V=LATEST" defer></SCRIPT>
+	<SCRIPT SRC="https://cdn.rumia.me/LIB/Login.js?V=LATEST" defer></SCRIPT>
+
+	<SCRIPT SRC="/Script/Main.js" defer></SCRIPT>
+	<SCRIPT SRC="/Script/API.js" defer></SCRIPT>
+
+	<SCRIPT SRC="/Script/Home.js" defer></SCRIPT>
+</HTML>
