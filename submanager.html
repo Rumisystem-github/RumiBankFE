@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>サブスク管理</TITLE>
+
+		<!--るみ鯖のデフォ-->
+		<LINK REL="stylesheet" HREF="https://cdn.rumia.me/CSS/reset.css">
+		<LINK REL="stylesheet" HREF="https://cdn.rumia.me/CSS/font.css">
+		<LINK REL="stylesheet" HREF="https://cdn.rumia.me/CSS/DEFAULT.css">
+		<LINK REL="stylesheet" HREF="https://cdn.rumia.me/CSS/icon.css">
+
+		<LINK REL="stylesheet" HREF="/Style/Main.css">
+	</HEAD>
+	<BODY>
+		<DIV ID="PLAN_LIST"></DIV>
+
+		<FOOTER>
+			<A HREF="https://rumishistem.su/">©合同会社るみしすてむ</A>
+			<A HREF="https://rumishistem.su/tokutei_shou_torihiki_hou.txt">特定商取引法表示</A>
+		</FOOTER>
+	</BODY>
+
+	<SCRIPT SRC="https://cdn.rumia.me/LIB/DIALOG.js?V=LATEST"></SCRIPT>
+	<SCRIPT SRC="https://cdn.rumia.me/LIB/COOKIE.js?V=LATEST"></SCRIPT>
+	<SCRIPT SRC="https://cdn.rumia.me/LIB/Login.js?V=LATEST"></SCRIPT>
+
+	<SCRIPT SRC="/Script/Main.js" defer></SCRIPT>
+	<SCRIPT SRC="/Script/API.js" defer></SCRIPT>
+	<SCRIPT defer>
+		let mel = {
+			plan_list: document.getElementById("PLAN_LIST")
+		};
+
+		async function main() {
+			let ajax = await fetch("/api/Subscription", {
+				headers: {
+					"TOKEN": session
+				}
+			});
+			const result = await ajax.json();
+			if (!result.STATUS) {
+				return;
+			}
+
+			let registed = null;
+
+			if (result.ENABLE) {
+				registed = result.PLAN;
+			}
+
+			for (let i = 0; i < result.LIST.length; i++) {
+				const plan = result.LIST[i];
+
+				let item = document.createElement("DIV");
+				item.className = "PLAN_ITEM";
+				mel.plan_list.appendChild(item);
+
+				let name = document.createElement("DIV");
+				name.innerText = plan.NAME;
+				item.appendChild(name);
+
+				let price = document.createElement("DIV");
+				price.innerText = plan.PRICE + "L";
+				item.appendChild(price);
+
+				let regist_button = document.createElement("BUTTON");
+				item.appendChild(regist_button);
+
+				if (registed == null) {
+					regist_button.innerText = "登録";
+					regist_button.addEventListener("click", async (e)=>{
+						if ((await dialog.INPUT("この操作は元に戻せません、登録しますか？", {TYPE:"NONE"}))) {
+							await subscription_regist(plan.ID);
+						}
+					});
+				} else {
+					if (registed == plan.ID) {
+						regist_button.innerText = "解約";
+						regist_button.addEventListener("click", async (e)=>{
+							if ((await dialog.INPUT("この操作は元に戻せません、解約しますか？", {TYPE:"NONE"}))) {
+								await subscription_delete();
+							}
+						});
+					} else {
+						regist_button.innerText = "切り替える";
+						regist_button.addEventListener("click", async (e)=>{
+							if ((await dialog.INPUT("この操作は元に戻せません、登録しますか？", {TYPE:"NONE"}))) {
+								await subscription_regist(plan.ID);
+							}
+						});
+					}
+				}
+			}
+		}
+
+		async function subscription_regist(plan) {
+			let ajax = await fetch("/api/Subscription", {
+				method: "POST",
+				headers: {
+					"TOKEN": session
+				},
+				body: JSON.stringify({
+					"PLAN": plan
+				})
+			});
+			const result = await ajax.json();
+			if (result.STATUS) {
+				await dialog.DIALOG("決済が完了しました");
+				window.location.reload();
+			} else {
+				await dialog.DIALOG("決済できませんでした");
+			}
+		}
+
+		async function subscription_delete() {
+			let ajax = await fetch("/api/Subscription", {
+				method: "DELETE",
+				headers: {
+					"TOKEN": session
+				}
+			});
+			const result = await ajax.json();
+			if (result.STATUS) {
+				await dialog.DIALOG("正常に解約されました！\nご利用ありがとうございました。");
+				window.location.reload();
+			} else {
+				await dialog.DIALOG("解約に失敗しました。\n直ちに管理者へ問い合わせてください、申し訳ございません。");
+			}
+		}
+	</SCRIPT>
+</HTML>
